@@ -1,8 +1,8 @@
-package mx.edu.utez.fastfood.fastfood.model.ingredient;
+package mx.edu.utez.fastfood.fastfood.model;
 
-public class Ingredient {
-    long id;
-    String name;
+public class Category {
+    private long id;
+    private String name;
 
     public long getId() {
         return id;
@@ -20,10 +20,10 @@ public class Ingredient {
         this.name = name;
     }
 
-    public Ingredient() {
+    public Category() {
     }
 
-    public Ingredient(long id, String name) {
+    public Category(long id, String name) {
         this.id = id;
         this.name = name;
     }
