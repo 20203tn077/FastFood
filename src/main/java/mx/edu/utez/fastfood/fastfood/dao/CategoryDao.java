@@ -1,4 +1,6 @@
-package mx.edu.utez.fastfood.fastfood.model.category;
+package mx.edu.utez.fastfood.fastfood.dao;
+
+import mx.edu.utez.fastfood.fastfood.model.Category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

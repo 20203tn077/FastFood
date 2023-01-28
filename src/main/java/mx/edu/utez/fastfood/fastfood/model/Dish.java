@@ -1,7 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.model.dish;
-
-import mx.edu.utez.fastfood.fastfood.model.category.Category;
-import mx.edu.utez.fastfood.fastfood.model.ingredient.Ingredient;
+package mx.edu.utez.fastfood.fastfood.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
