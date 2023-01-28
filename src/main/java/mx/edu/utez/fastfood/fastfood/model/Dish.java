@@ -100,4 +100,18 @@ public class Dish {
         this.category = category;
         this.ingredients = ingredients;
     }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", registrationDate=" + registrationDate +
+                ", status=" + status +
+                ", category=" + category +
+                ", ingredients=" + ingredients +
+                '}';
+    }
 }
