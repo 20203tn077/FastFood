@@ -32,7 +32,7 @@ public class MySqlConnection {
             password = connectionProperties.getString("password");
         }
 
-        return DriverManager.getConnection(String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s", host, port, database, useSSL, timezone), user, password);
+        return DriverManager.getConnection(String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s&allowPublicKeyRetrieval=true", host, port, database, useSSL, timezone), user, password);
     }
 
     public static void closeConnection(Connection con, PreparedStatement pstm, ResultSet rs) {
