@@ -81,13 +81,21 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status) {
+    public Dish(String name, String description, double price, Category category, List<Ingredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.ingredients = ingredients;
+    }
+
+    public Dish(long id, String name, String description, double price, Category category, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.registrationDate = registrationDate;
-        this.status = status;
+        this.category = category;
+        this.ingredients = ingredients;
     }
 
     public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status, Category category) {
@@ -98,7 +106,6 @@ public class Dish {
         this.registrationDate = registrationDate;
         this.status = status;
         this.category = category;
-        this.ingredients = ingredients;
     }
 
     @Override

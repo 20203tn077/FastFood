@@ -23,6 +23,10 @@ public class Category {
     public Category() {
     }
 
+    public Category(long id) {
+        this.id = id;
+    }
+
     public Category(long id, String name) {
         this.id = id;
         this.name = name;
