@@ -33,8 +33,10 @@ public class DishServlet extends HttpServlet {
         switch (request.getParameter("action") != null ? request.getParameter("action") : "") {
             case "index":
                 index(request, response);
+                break;
             case "find":
                 find(request, response);
+                break;
             case "create":
                 create(request, response);
                 break;
@@ -177,7 +179,6 @@ public class DishServlet extends HttpServlet {
     }
 
     private void sendJson(Object obj) throws IOException {
-        System.out.println(obj);
         response.setContentType("application/json");
         response.getWriter().write(DishGson.getGson().toJson(obj));
     }
