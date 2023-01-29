@@ -18,7 +18,7 @@ public class DishDao {
         List<Dish> dishes = new ArrayList<>();
         try {
             con = MySqlConnection.getConnection();
-            pstm = con.prepareStatement("SELECT d.id, d.name, d.description, d.price, d.registration_date, d.status, c.id, c.name, i.id, i.name FROM dish d INNER JOIN category c ON d.category_id = c.id INNER JOIN dish_has_ingredient di ON di.dish_id = d.id INNER JOIN ingredient i ON di.ingredient_id = i.id ORDER BY d.registration_date DESC");
+            pstm = con.prepareStatement("SELECT d.id, d.name, d.description, d.price, d.registration_date, d.status, c.id, c.name, i.id, i.name FROM dish d INNER JOIN category c ON d.category_id = c.id LEFT JOIN dish_has_ingredient di ON di.dish_id = d.id LEFT JOIN ingredient i ON di.ingredient_id = i.id ORDER BY d.registration_date DESC");
             rs = pstm.executeQuery();
 
             Map<Long, Dish> dishMap = new HashMap<>();
@@ -41,7 +41,7 @@ public class DishDao {
                     ));
                     ingredientListMap.put(id, new ArrayList<>());
                 }
-                ingredientListMap.get(id).add(new Ingredient(
+                if (rs.getString("i.id") != null) ingredientListMap.get(id).add(new Ingredient(
                         rs.getLong("i.id"),
                         rs.getString("i.name")
                 ));
@@ -78,7 +78,7 @@ public class DishDao {
         Dish dish = null;
         try {
             con = MySqlConnection.getConnection();
-            pstm = con.prepareStatement("SELECT d.id, d.name, d.description, d.price, d.registration_date, d.status, c.id, c.name, i.id, i.name FROM dish d INNER JOIN category c ON d.category_id = c.id INNER JOIN dish_has_ingredient di ON di.dish_id = d.id INNER JOIN ingredient i ON di.ingredient_id = i.id WHERE d.id = ?");
+            pstm = con.prepareStatement("SELECT d.id, d.name, d.description, d.price, d.registration_date, d.status, c.id, c.name, i.id, i.name FROM dish d INNER JOIN category c ON d.category_id = c.id LEFT JOIN dish_has_ingredient di ON di.dish_id = d.id LEFT JOIN ingredient i ON di.ingredient_id = i.id WHERE d.id = ?");
             pstm.setLong(1, id);
             rs = pstm.executeQuery();
 
@@ -98,7 +98,7 @@ public class DishDao {
                         )
                 );
 
-                ingredients.add(new Ingredient(
+                if (rs.getString("i.id") != null) ingredients.add(new Ingredient(
                         rs.getLong("i.id"),
                         rs.getString("i.name")
                 ));
