@@ -1,19 +1,19 @@
-package mx.edu.utez.fastfood.fastfood.controller;
+package mx.edu.utez.fastfood.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mx.edu.utez.fastfood.fastfood.dao.CategoryDao;
-import mx.edu.utez.fastfood.fastfood.dao.DishDao;
-import mx.edu.utez.fastfood.fastfood.dao.IngredientDao;
-import mx.edu.utez.fastfood.fastfood.exception.ValidationException;
-import mx.edu.utez.fastfood.fastfood.model.Category;
-import mx.edu.utez.fastfood.fastfood.model.Dish;
-import mx.edu.utez.fastfood.fastfood.model.Ingredient;
-import mx.edu.utez.fastfood.fastfood.service.ValidationService;
-import mx.edu.utez.fastfood.fastfood.util.DishGson;
+import mx.edu.utez.fastfood.dao.CategoryDao;
+import mx.edu.utez.fastfood.dao.DishDao;
+import mx.edu.utez.fastfood.dao.IngredientDao;
+import mx.edu.utez.fastfood.exception.ValidationException;
+import mx.edu.utez.fastfood.model.Category;
+import mx.edu.utez.fastfood.model.Dish;
+import mx.edu.utez.fastfood.model.Ingredient;
+import mx.edu.utez.fastfood.service.ValidationService;
+import mx.edu.utez.fastfood.util.DishGson;
 
 import java.io.IOException;
 import java.util.ArrayList;

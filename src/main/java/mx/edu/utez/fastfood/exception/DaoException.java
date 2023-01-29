@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.exception;
+package mx.edu.utez.fastfood.exception;
 
 public class DaoException extends Exception{
     public DaoException(String message) {
