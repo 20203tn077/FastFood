@@ -54,7 +54,7 @@ public class Dish {
         this.registrationDate = registrationDate;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -90,7 +90,7 @@ public class Dish {
         this.status = status;
     }
 
-    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status, Category category, List<Ingredient> ingredients) {
+    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
