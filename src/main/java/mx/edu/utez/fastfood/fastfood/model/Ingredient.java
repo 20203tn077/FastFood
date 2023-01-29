@@ -23,6 +23,10 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    public Ingredient(long id) {
+        this.id = id;
+    }
+
     public Ingredient(long id, String name) {
         this.id = id;
         this.name = name;
