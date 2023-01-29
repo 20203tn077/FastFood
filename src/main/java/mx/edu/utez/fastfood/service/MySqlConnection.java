@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.service;
+package mx.edu.utez.fastfood.service;
 
 import java.sql.*;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.model;
+package mx.edu.utez.fastfood.model;
 
 import java.time.LocalDateTime;
 import java.util.List;

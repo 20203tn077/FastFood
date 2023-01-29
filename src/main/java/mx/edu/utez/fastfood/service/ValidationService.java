@@ -1,6 +1,6 @@
-package mx.edu.utez.fastfood.fastfood.service;
+package mx.edu.utez.fastfood.service;
 
-import mx.edu.utez.fastfood.fastfood.exception.ValidationException;
+import mx.edu.utez.fastfood.exception.ValidationException;
 
 public class ValidationService {
     public static String[] validateCheckbox(String[] value, String name, Boolean required, Integer minChecked, Integer maxChecked) throws ValidationException {

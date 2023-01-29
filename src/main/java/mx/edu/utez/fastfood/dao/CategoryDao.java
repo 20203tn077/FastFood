@@ -1,8 +1,8 @@
-package mx.edu.utez.fastfood.fastfood.dao;
+package mx.edu.utez.fastfood.dao;
 
-import mx.edu.utez.fastfood.fastfood.exception.DaoException;
-import mx.edu.utez.fastfood.fastfood.model.Category;
-import mx.edu.utez.fastfood.fastfood.service.MySqlConnection;
+import mx.edu.utez.fastfood.exception.DaoException;
+import mx.edu.utez.fastfood.model.Category;
+import mx.edu.utez.fastfood.service.MySqlConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
