@@ -74,6 +74,22 @@ public class DishDao {
         return exists;
     }
 
+    public boolean isActiveById(long id) throws DaoException {
+        boolean active = false;
+        try {
+            con = MySqlConnection.getConnection();
+            pstm = con.prepareStatement("SELECT d.status FROM dish d WHERE d.id = ?");
+            pstm.setLong(1, id);
+            rs = pstm.executeQuery();
+            if (rs.next()) active = rs.getBoolean(1);
+        } catch (SQLException e) {
+            throw new DaoException("Error en DishDao:isActiveById", e);
+        } finally {
+            MySqlConnection.closeConnection(con, pstm, rs);
+        }
+        return active;
+    }
+
     public Dish findById(long id) throws DaoException {
         Dish dish = null;
         try {

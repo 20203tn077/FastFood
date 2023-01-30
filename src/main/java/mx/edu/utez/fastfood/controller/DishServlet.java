@@ -71,7 +71,7 @@ public class DishServlet extends HttpServlet {
         Map<String, Object> responseData = new HashMap<>();
         try {
             DishDao dishDao = new DishDao();
-            long id = ValidationService.validateNumber(Long.valueOf(request.getParameter("id")), "ID", true, null, null, null);
+            long id = ValidationService.validateNumber(request.getParameter("id") != null ? Long.valueOf(request.getParameter("id")) : null, "ID", true, null, null, null);
             Dish dish = dishDao.findById(id);
             if (dish == null) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -98,8 +98,8 @@ public class DishServlet extends HttpServlet {
             Dish dish = new Dish(
                     ValidationService.validateText(request.getParameter("name"), "Nombre", true, null, 45, null),
                     ValidationService.validateText(request.getParameter("description"), "Descripción", false, null, 100, null),
-                    ValidationService.validateNumber(Double.valueOf(request.getParameter("price")), "Precio", true, null, 0d, null),
-                    new Category(ValidationService.validateNumber(Long.valueOf(request.getParameter("categoryId")), "Categoría", true, null, null, null)),
+                    ValidationService.validateNumber(request.getParameter("price") != null ? Double.valueOf(request.getParameter("price")) : null, "Precio", true, null, 0d, null),
+                    new Category(ValidationService.validateNumber(request.getParameter("category") != null ? Long.valueOf(request.getParameter("category")) : null, "Categoría", true, null, null, null)),
                     ingredients
             );
             boolean success = dishDao.create(dish);
@@ -111,6 +111,7 @@ public class DishServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("success", false);
             request.setAttribute("message", "Ocurrió un error inesperado");
+            e.printStackTrace();
         } finally {
             index(request, response);
         }
@@ -119,8 +120,14 @@ public class DishServlet extends HttpServlet {
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             DishDao dishDao = new DishDao();
-            long id = ValidationService.validateNumber(Long.valueOf(request.getParameter("id")), "ID", true, null, null, null);
+            long id = ValidationService.validateNumber(request.getParameter("id") != null ? Long.valueOf(request.getParameter("id")) : null, "ID", true, null, null, null);
             if (!dishDao.existsById(id)) {
+                request.setAttribute("success", false);
+                request.setAttribute("message", "No se encontró el platillo indicado");
+            } else if (!dishDao.isActiveById(id)) {
+                request.setAttribute("success", false);
+                request.setAttribute("message", "El platillo se encuentra desactivado");
+            } else {
                 List<Ingredient> ingredients = new ArrayList<>();
                 for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients"), "Ingredientes", true, null, null)) {
                     ingredients.add(new Ingredient(Long.parseLong(ingredientId)));
@@ -129,16 +136,13 @@ public class DishServlet extends HttpServlet {
                         id,
                         ValidationService.validateText(request.getParameter("name"), "Nombre", true, null, 45, null),
                         ValidationService.validateText(request.getParameter("description"), "Descripción", false, null, 100, null),
-                        ValidationService.validateNumber(Double.valueOf(request.getParameter("price")), "Precio", true, null, 0d, null),
-                        new Category(ValidationService.validateNumber(Long.valueOf(request.getParameter("categoryId")), "Categoría", true, null, null, null)),
+                        ValidationService.validateNumber(request.getParameter("price") != null ? Double.valueOf(request.getParameter("price")) : null, "Precio", true, null, 0d, null),
+                        new Category(ValidationService.validateNumber(request.getParameter("category") != null ? Long.valueOf(request.getParameter("category")) : null, "Categoría", true, null, null, null)),
                         ingredients
                 );
                 boolean success = dishDao.update(dish);
                 request.setAttribute("success", success);
                 request.setAttribute("message", success ? "El platillo se actualizó exitosamente" : "El platillo no pudo ser actualizado");
-            } else {
-                request.setAttribute("success", true);
-                request.setAttribute("message", "");
             }
         } catch (ValidationException e) {
             request.setAttribute("success", false);
@@ -154,10 +158,13 @@ public class DishServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             DishDao dishDao = new DishDao();
-            long id = ValidationService.validateNumber(Long.valueOf(request.getParameter("id")), "ID", true, null, null, null);
+            long id = ValidationService.validateNumber(request.getParameter("id") != null ? Long.valueOf(request.getParameter("id")) : null, "ID", true, null, null, null);
             if (!dishDao.existsById(id)) {
                 request.setAttribute("success", false);
                 request.setAttribute("message", "No se encontró el platillo indicado");
+            } else if (!dishDao.isActiveById(id)) {
+                request.setAttribute("success", false);
+                request.setAttribute("message", "El platillo se encuentra desactivado");
             } else {
                 boolean success = new DishDao().delete(id);
                 request.setAttribute("success", success);
