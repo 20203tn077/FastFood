@@ -11,7 +11,7 @@ public class DishGson{
         builder.registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
             @Override
             public JsonElement serialize(LocalDateTime localDateTime, Type srcType, JsonSerializationContext context) {
-                return new JsonPrimitive(localDateTime.toString());
+                return new JsonPrimitive(localDateTime.toString() + "Z");
             }
         });
         return builder.create();
