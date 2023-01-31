@@ -100,20 +100,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="${c}/Platillos">
+                    <form id="dishCreation_form" action="${c}/Platillos">
                         <input type="hidden" name="action" value="create">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="dishCreation_inpName" class="form-label">Nombre: *</label>
-                                <input id="dishCreation_inpName" name="name" class="form-control" type="text" required maxlength="">
+                                <input id="dishCreation_inpName" name="name" class="form-control" type="text" required maxlength="45">
                             </div>
                             <div class="col-md-6">
                                 <label for="dishCreation_inpPrice" class="form-label">Precio: *</label>
-                                <input id="dishCreation_inpPrice" name="name" class="form-control" type="text" required maxlength="">
+                                <input id="dishCreation_inpPrice" name="price" class="form-control" type="number" step="any" required min="0">
                             </div>
                             <div class="col-12">
                                 <label for="dishCreation_inpDescription" class="form-label">Descripción:</label>
-                                <input id="dishCreation_inpDescription" name="description" class="form-control" type="text" required maxlength="">
+                                <input id="dishCreation_inpDescription" name="description" class="form-control" type="text" required maxlength="100">
                             </div>
                             <div class="col-md-6">
                                 <label for="dishCreation_inpCategory" class="form-label">Categoría: *</label>
@@ -127,7 +127,7 @@
                                 <label class="form-label">Ingredientes: *</label>
                                 <c:forEach items="${ingredients}" var="ingredient" varStatus="i">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${i.getCount()}" name="ingredients">
+                                        <input required class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${i.getCount()}" name="ingredients">
                                         <label class="form-check-label" for="dishCreation_ingredient${i.getCount()}">
                                             ${ingredient.name}
                                         </label>
@@ -180,8 +180,8 @@
                     <p id="confirmation_txtText"></p>
                 </div>
                 <div class="modal-footer">
-                    <button id="confirmation_btnConfirm" type="button" class="btn btn-danger" data-bs-dismiss="modal">Aceptar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="confirmation_btnConfirm" type="button" class="btn btn-danger">Aceptar</button>
+                    <button id="confirmation_btnCancel" type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -189,5 +189,6 @@
     
     <script src="${c}/assets/js/bootstrap.bundle.min.js"></script>
     <script src="${c}/assets/js/main.js"></script>
+    <script>console.log('${message}')</script>
 </body>
 </html>
