@@ -180,15 +180,27 @@
                     <p id="confirmation_txtText"></p>
                 </div>
                 <div class="modal-footer">
-                    <button id="confirmation_btnConfirm" type="button" class="btn btn-danger">Aceptar</button>
+                    <button id="confirmation_btnConfirm" type="submit" class="btn btn-danger">Aceptar</button>
                     <button id="confirmation_btnCancel" type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICACIONES -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="notification_toast" class="toast border-0 text-bg-success" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check me-2" id="notification_elIcon"></i><span id="notification_txtMessage"></span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
     
     <script src="${c}/assets/js/bootstrap.bundle.min.js"></script>
     <script src="${c}/assets/js/main.js"></script>
-    <script>console.log('${message}')</script>
+    <script>if (${message != null}) notification.show('${message}', ${success})</script>
 </body>
 </html>
