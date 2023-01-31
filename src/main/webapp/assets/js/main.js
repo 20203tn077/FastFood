@@ -4,9 +4,17 @@ const confirmation = {
     txtTitle: document.getElementById('confirmation_txtTitle'),
     txtText: document.getElementById('confirmation_txtText'),
     btnConfirm: document.getElementById('confirmation_btnConfirm'),
+    btnCancel: document.getElementById('confirmation_btnCancel'),
     show: function (title, text, form, modal) {
-        this.btnConfirm.onclick = () => form.submit()
-        if (modal) this.modalElement.addEventListener('hide.bs.modal', () => modal.show())
+        this.btnConfirm.onclick = () => {
+            this.modal.hide()
+            form.submit()
+            if (modal) modal.show()
+        }
+        this.btnCancel.onclick = () => {
+            this.modal.hide()
+            if (modal) modal.show()
+        }
         this.txtTitle.innerText = title
         this.txtText.innerText = text
         this.modal.show()
@@ -15,7 +23,7 @@ const confirmation = {
 
 const dishCreation = {
     modal: new bootstrap.Modal(document.getElementById('dishCreation_modal'), {backdrop: 'static', keyboard: false}),
-    form: document.getElementById('dishDeletion_form'),
+    form: document.getElementById('dishCreation_form'),
     btnCreate: document.getElementById('dishCreation_btnCreate'),
     show: function () {
         this.form.reset()

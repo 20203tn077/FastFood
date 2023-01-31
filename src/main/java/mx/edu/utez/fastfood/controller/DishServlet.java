@@ -92,7 +92,7 @@ public class DishServlet extends HttpServlet {
         try {
             DishDao dishDao = new DishDao();
             List<Ingredient> ingredients = new ArrayList<>();
-            for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients"), "Ingredientes", true, null, null)) {
+            for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients") != null ? request.getParameterValues("ingredients") : new String[0], "Ingredientes", true, null, null)) {
                 ingredients.add(new Ingredient(Long.parseLong(ingredientId)));
             }
             Dish dish = new Dish(
@@ -129,7 +129,7 @@ public class DishServlet extends HttpServlet {
                 request.setAttribute("message", "El platillo se encuentra desactivado");
             } else {
                 List<Ingredient> ingredients = new ArrayList<>();
-                for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients"), "Ingredientes", true, null, null)) {
+                for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients") != null ? request.getParameterValues("ingredients") : new String[0], "Ingredientes", true, null, null)) {
                     ingredients.add(new Ingredient(Long.parseLong(ingredientId)));
                 }
                 Dish dish = new Dish(

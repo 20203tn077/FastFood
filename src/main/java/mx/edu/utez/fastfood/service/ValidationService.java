@@ -4,7 +4,7 @@ import mx.edu.utez.fastfood.exception.ValidationException;
 
 public class ValidationService {
     public static String[] validateCheckbox(String[] value, String name, Boolean required, Integer minChecked, Integer maxChecked) throws ValidationException {
-        if (value == null) if (required) throw new ValidationException("El campo " + name + " es requerido"); else return null;
+        if (value == null || value.length == 0) if (required) throw new ValidationException("El campo " + name + " es requerido"); else return null;
         if (minChecked != null && value.length < minChecked) throw new ValidationException("El número de elementos seleccionados del campo " + name + " es menor al mínimo requerido");
         if (maxChecked != null && value.length > maxChecked) throw new ValidationException("El número de elementos seleccionados del campo " + name + " es mayor al máximo permitido");
         return value;
