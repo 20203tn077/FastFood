@@ -5,6 +5,7 @@ const confirmation = {
     btnConfirm: document.getElementById('confirmation_btnConfirm'),
     btnCancel: document.getElementById('confirmation_btnCancel'),
     show: function (title, text, form, modal) {
+        modal.hide()
         this.btnConfirm.setAttribute('form', form.getAttribute('id'))
         this.btnConfirm.onclick = this.btnCancel.onclick = () => {
             this.modal.hide()
@@ -43,6 +44,7 @@ const dishCreation = {
         this.modal.show()
     },
     confirm: function () {
+        console.log('123', this.form.reportValidity())
         if (this.form.reportValidity()) confirmation.show('Confirmar registro', '¿Estás seguro de registrar un platillo con los datos ingresados?', this.form, this.modal)
         else notification.show('Hay campos incompletos o con errores')
     },
