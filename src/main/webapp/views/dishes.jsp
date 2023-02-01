@@ -100,7 +100,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="dishCreation_form" action="${c}/Platillos">
+                    <form method="POST" id="dishCreation_form" action="${c}/Platillos">
                         <input type="hidden" name="action" value="create">
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="dishCreation_inpDescription" class="form-label">Descripción:</label>
-                                <input id="dishCreation_inpDescription" name="description" class="form-control" type="text" required maxlength="100">
+                                <input id="dishCreation_inpDescription" name="description" class="form-control" type="text" maxlength="100">
                             </div>
                             <div class="col-md-6">
                                 <label for="dishCreation_inpCategory" class="form-label">Categoría: *</label>
@@ -127,7 +127,7 @@
                                 <label class="form-label">Ingredientes: *</label>
                                 <c:forEach items="${ingredients}" var="ingredient" varStatus="i">
                                     <div class="form-check">
-                                        <input required class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${i.getCount()}" name="ingredients">
+                                        <input class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${i.getCount()}" name="ingredients">
                                         <label class="form-check-label" for="dishCreation_ingredient${i.getCount()}">
                                             ${ingredient.name}
                                         </label>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button onclick="dishCreation.confirm()" type="button" class="btn btn-primary" id="dishCreation_btnCreate" data-bs-dismiss="modal">Registrar</button>
+                    <button onclick="dishCreation.confirm()" type="button" class="btn btn-primary" id="dishCreation_btnCreate">Registrar</button>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
     </div>
 
     <!-- FORMULARIO DE ELIMINACIÓN (Oculto) -->
-    <form hidden id="dishDeletion_form" action="${c}/Platillos">
+    <form method="POST" hidden id="dishDeletion_form" action="${c}/Platillos">
         <input type="text" name="action" value="delete">
         <input type="number" id="dishDeletion_inpId" name="id">
     </form>
@@ -190,11 +190,8 @@
     <!-- TOAST DE NOTIFICACIONES -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="notification_toast" class="toast border-0 text-bg-success" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-check me-2" id="notification_elIcon"></i><span id="notification_txtMessage"></span>
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div class="toast-body">
+                <i class="fas fa-check me-2" id="notification_elIcon"></i><span id="notification_txtMessage"></span>
             </div>
         </div>
     </div>

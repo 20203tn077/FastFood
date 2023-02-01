@@ -63,7 +63,7 @@ public class DishServlet extends HttpServlet {
             request.setAttribute("success", false);
             request.setAttribute("message", "Ocurrió un error inesperado");
         } finally {
-            redirect("/views/dishes.jsp");
+            forward("/views/dishes.jsp");
         }
     }
 
@@ -113,7 +113,7 @@ public class DishServlet extends HttpServlet {
             request.setAttribute("message", "Ocurrió un error inesperado");
             e.printStackTrace();
         } finally {
-            index(request, response);
+            redirect("Platillos");
         }
     }
 
@@ -151,7 +151,7 @@ public class DishServlet extends HttpServlet {
             request.setAttribute("success", false);
             request.setAttribute("message", "Ocurrió un error inesperado");
         } finally {
-            index(request, response);
+            redirect("Platillos");
         }
     }
 
@@ -177,12 +177,16 @@ public class DishServlet extends HttpServlet {
             request.setAttribute("success", false);
             request.setAttribute("message", "Ocurrió un error inesperado");
         } finally {
-            index(request, response);
+            redirect("Platillos");
         }
     }
 
-    private void redirect(String url) throws ServletException, IOException {
+    private void forward(String url) throws ServletException, IOException {
         request.getRequestDispatcher(url).forward(request, response);
+    }
+    
+    private void redirect(String url) throws IOException {
+        response.sendRedirect(url);
     }
 
     private void sendJson(Object obj) throws IOException {
