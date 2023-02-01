@@ -21,13 +21,12 @@ public class DishDao {
             pstm = con.prepareStatement("SELECT d.id, d.name, d.description, d.price, d.registration_date, d.status, c.id, c.name, i.id, i.name FROM dish d INNER JOIN category c ON d.category_id = c.id LEFT JOIN dish_has_ingredient di ON di.dish_id = d.id LEFT JOIN ingredient i ON di.ingredient_id = i.id ORDER BY d.registration_date DESC");
             rs = pstm.executeQuery();
 
-            Map<Long, Dish> dishMap = new HashMap<>();
             Map<Long, List<Ingredient>> ingredientListMap = new HashMap<>();
 
             while (rs.next()) {
                 long id = rs.getLong("d.id");
                 if (!ingredientListMap.containsKey(id)) {
-                    dishMap.put(id, new Dish(
+                    dishes.add(new Dish(
                             id,
                             rs.getString("d.name"),
                             rs.getString("d.description"),
@@ -46,10 +45,7 @@ public class DishDao {
                         rs.getString("i.name")
                 ));
             }
-            dishMap.forEach((id, dish) -> {
-                dish.setIngredients(ingredientListMap.get(id));
-                dishes.add(dish);
-            });
+            for (Dish dish: dishes) dish.setIngredients(ingredientListMap.get(dish.getId()));
         } catch (SQLException e) {
             throw new DaoException("Error en DishDao:findAll", e);
         } finally {

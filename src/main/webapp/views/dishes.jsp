@@ -67,7 +67,7 @@
                                             <div class="row g-1 justify-content-center">
                                                 <c:if test="${dish.status}">
                                                     <div class="col-auto">
-                                                        <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                                        <button onclick="dishUpdate.show(${dish.id})" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
                                                     </div>
                                                     <div class="col-auto">
                                                         <button onclick="dishDeletion.show(${dish.id})" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -104,11 +104,11 @@
                         <input type="hidden" name="action" value="create">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="dishCreation_inpName" class="form-label">Nombre: *</label>
+                                <label for="dishCreation_inpName" class="form-label">Nombre: <span class="fw-bold text-danger">*</span></label>
                                 <input id="dishCreation_inpName" name="name" class="form-control" type="text" required maxlength="45">
                             </div>
                             <div class="col-md-6">
-                                <label for="dishCreation_inpPrice" class="form-label">Precio: *</label>
+                                <label for="dishCreation_inpPrice" class="form-label">Precio: <span class="fw-bold text-danger">*</span></label>
                                 <input id="dishCreation_inpPrice" name="price" class="form-control" type="number" step="any" required min="0">
                             </div>
                             <div class="col-12">
@@ -116,7 +116,7 @@
                                 <input id="dishCreation_inpDescription" name="description" class="form-control" type="text" maxlength="100">
                             </div>
                             <div class="col-md-6">
-                                <label for="dishCreation_inpCategory" class="form-label">Categoría: *</label>
+                                <label for="dishCreation_inpCategory" class="form-label">Categoría: <span class="fw-bold text-danger">*</span></label>
                                 <select class="form-select" name="category" required id="dishCreation_inpCategory">
                                     <c:forEach items="${categories}" var="category">
                                         <option value="${category.id}">${category.name}</option>
@@ -124,11 +124,11 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Ingredientes: *</label>
-                                <c:forEach items="${ingredients}" var="ingredient" varStatus="i">
+                                <label class="form-label">Ingredientes: <span class="fw-bold text-danger">*</span></label>
+                                <c:forEach items="${ingredients}" var="ingredient">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${i.getCount()}" name="ingredients">
-                                        <label class="form-check-label" for="dishCreation_ingredient${i.getCount()}">
+                                        <input class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishCreation_ingredient${ingredient.id}" name="ingredients">
+                                        <label class="form-check-label" for="dishCreation_ingredient${ingredient.id}">
                                             ${ingredient.name}
                                         </label>
                                     </div>
@@ -145,20 +145,57 @@
         </div>
     </div>
 
-    
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
+
+    <!-- FORMULARIO DE ACTUALIZACIÓN -->
+    <div class="modal fade" id="dishUpdate_modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Actualizar platillo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <form method="POST" id="dishUpdate_form" action="${c}/Platillos">
+                        <input type="hidden" name="action" value="update">
+                        <input id="dishUpdate_inpId" type="hidden" name="id">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="dishUpdate_inpName" class="form-label">Nombre: <span class="fw-bold text-danger">*</span></label>
+                                <input id="dishUpdate_inpName" name="name" class="form-control" type="text" required maxlength="45">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dishUpdate_inpPrice" class="form-label">Precio: <span class="fw-bold text-danger">*</span></label>
+                                <input id="dishUpdate_inpPrice" name="price" class="form-control" type="number" step="any" required min="0">
+                            </div>
+                            <div class="col-12">
+                                <label for="dishUpdate_inpDescription" class="form-label">Descripción:</label>
+                                <input id="dishUpdate_inpDescription" name="description" class="form-control" type="text" maxlength="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dishUpdate_inpCategory" class="form-label">Categoría: <span class="fw-bold text-danger">*</span></label>
+                                <select class="form-select" name="category" required id="dishUpdate_inpCategory">
+                                    <c:forEach items="${categories}" var="category">
+                                        <option value="${category.id}">${category.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Ingredientes: <span class="fw-bold text-danger">*</span></label>
+                                <c:forEach items="${ingredients}" var="ingredient">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="${ingredient.id}" id="dishUpdate_ingredient${ingredient.id}" name="ingredients">
+                                        <label class="form-check-label" for="dishUpdate_ingredient${ingredient.id}">
+                                                ${ingredient.name}
+                                        </label>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button onclick="dishUpdate.confirm()" type="button" class="btn btn-primary" id="dishUpdate_btnUpdate">Registrar</button>
                 </div>
             </div>
         </div>
@@ -174,10 +211,10 @@
     <div class="modal fade" tabindex="-1" id="confirmation_modal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
-                    <i class="fa-regular fa-circle-exclamation"></i>
-                    <h5 id="confirmation_txtTitle"></h5>
-                    <p id="confirmation_txtText"></p>
+                <div class="modal-body text-center">
+                    <div class="text-warning" style="font-size: 5rem"><i class="fas fa-circle-exclamation"></i></div>
+                    <h3 id="confirmation_txtTitle"></h3>
+                    <h5 class="text-muted" id="confirmation_txtText"></h5>
                 </div>
                 <div class="modal-footer">
                     <button id="confirmation_btnConfirm" type="submit" class="btn btn-danger">Aceptar</button>
@@ -198,6 +235,9 @@
     
     <script src="${c}/assets/js/bootstrap.bundle.min.js"></script>
     <script src="${c}/assets/js/main.js"></script>
-    <script>if (${message != null}) notification.show('${message}', ${success})</script>
+    <script>
+        const context = '${c}'
+        if (${message != null}) notification.show('${message}', ${success})
+    </script>
 </body>
 </html>

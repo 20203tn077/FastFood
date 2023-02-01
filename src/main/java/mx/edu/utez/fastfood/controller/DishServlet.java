@@ -25,6 +25,9 @@ import java.util.Map;
 public class DishServlet extends HttpServlet {
     private HttpServletRequest request;
     private HttpServletResponse response;
+    
+    private boolean success;
+    private String message;
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,9 +63,14 @@ public class DishServlet extends HttpServlet {
             request.setAttribute("categories", categoryDao.findAll());
             request.setAttribute("ingredients", ingredientDao.findAll());
         } catch (Exception e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", "Ocurrió un error inesperado");
+            success = false;
+            message = "Ocurrió un error inesperado";
         } finally {
+            if (message != null) {
+                request.setAttribute("success", success);
+                request.setAttribute("message", message);
+                message = null;
+            }
             forward("/views/dishes.jsp");
         }
     }
@@ -102,15 +110,14 @@ public class DishServlet extends HttpServlet {
                     new Category(ValidationService.validateNumber(request.getParameter("category") != null ? Long.valueOf(request.getParameter("category")) : null, "Categoría", true, null, null, null)),
                     ingredients
             );
-            boolean success = dishDao.create(dish);
-            request.setAttribute("success", success);
-            request.setAttribute("message", success ? "El platillo se registró exitosamente" : "El platillo no pudo ser creado");
+            success = dishDao.create(dish);
+            message = success ? "El platillo se registró exitosamente" : "El platillo no pudo ser creado";
         } catch (ValidationException e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", e.getMessage());
+            success = false;
+            message = e.getMessage();
         } catch (Exception e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", "Ocurrió un error inesperado");
+            success = false;
+            message = "Ocurrió un error inesperado";
             e.printStackTrace();
         } finally {
             redirect("Platillos");
@@ -122,11 +129,11 @@ public class DishServlet extends HttpServlet {
             DishDao dishDao = new DishDao();
             long id = ValidationService.validateNumber(request.getParameter("id") != null ? Long.valueOf(request.getParameter("id")) : null, "ID", true, null, null, null);
             if (!dishDao.existsById(id)) {
-                request.setAttribute("success", false);
-                request.setAttribute("message", "No se encontró el platillo indicado");
+                success = false;
+                message = "No se encontró el platillo indicado";
             } else if (!dishDao.isActiveById(id)) {
-                request.setAttribute("success", false);
-                request.setAttribute("message", "El platillo se encuentra desactivado");
+                success = false;
+                message = "El platillo se encuentra desactivado";
             } else {
                 List<Ingredient> ingredients = new ArrayList<>();
                 for (String ingredientId : ValidationService.validateCheckbox(request.getParameterValues("ingredients") != null ? request.getParameterValues("ingredients") : new String[0], "Ingredientes", true, null, null)) {
@@ -140,16 +147,15 @@ public class DishServlet extends HttpServlet {
                         new Category(ValidationService.validateNumber(request.getParameter("category") != null ? Long.valueOf(request.getParameter("category")) : null, "Categoría", true, null, null, null)),
                         ingredients
                 );
-                boolean success = dishDao.update(dish);
-                request.setAttribute("success", success);
-                request.setAttribute("message", success ? "El platillo se actualizó exitosamente" : "El platillo no pudo ser actualizado");
+                success = dishDao.update(dish);
+                message = success ? "El platillo se actualizó exitosamente" : "El platillo no pudo ser actualizado";
             }
         } catch (ValidationException e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", e.getMessage());
+            success = false;
+            message = e.getMessage();
         } catch (Exception e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", "Ocurrió un error inesperado");
+            success = false;
+            message = "Ocurrió un error inesperado";
         } finally {
             redirect("Platillos");
         }
@@ -160,22 +166,21 @@ public class DishServlet extends HttpServlet {
             DishDao dishDao = new DishDao();
             long id = ValidationService.validateNumber(request.getParameter("id") != null ? Long.valueOf(request.getParameter("id")) : null, "ID", true, null, null, null);
             if (!dishDao.existsById(id)) {
-                request.setAttribute("success", false);
-                request.setAttribute("message", "No se encontró el platillo indicado");
+                success = false;
+                message = "No se encontró el platillo indicado";
             } else if (!dishDao.isActiveById(id)) {
-                request.setAttribute("success", false);
-                request.setAttribute("message", "El platillo se encuentra desactivado");
+                success = false;
+                message = "El platillo se encuentra desactivado";
             } else {
-                boolean success = new DishDao().delete(id);
-                request.setAttribute("success", success);
-                request.setAttribute("message", success ? "El platillo se desactivó exitosamente" : "El platillo no pudo ser desactivado");
+                success = new DishDao().delete(id);
+                message =  success ? "El platillo se desactivó exitosamente" : "El platillo no pudo ser desactivado";
             }
         } catch (ValidationException e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", e.getMessage());
+            success = false;
+            message = e.getMessage();
         } catch (Exception e) {
-            request.setAttribute("success", false);
-            request.setAttribute("message", "Ocurrió un error inesperado");
+            success = false;
+            message = "Ocurrió un error inesperado";
         } finally {
             redirect("Platillos");
         }
