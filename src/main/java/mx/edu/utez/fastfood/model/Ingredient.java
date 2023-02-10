@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.model.ingredient;
+package mx.edu.utez.fastfood.model;
 
 public class Ingredient {
     long id;
@@ -23,8 +23,20 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    public Ingredient(long id) {
+        this.id = id;
+    }
+
     public Ingredient(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.model.category;
+package mx.edu.utez.fastfood.model;
 
 public class Category {
     private long id;
@@ -23,8 +23,20 @@ public class Category {
     public Category() {
     }
 
+    public Category(long id) {
+        this.id = id;
+    }
+
     public Category(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

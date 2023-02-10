@@ -1,4 +1,4 @@
-package mx.edu.utez.fastfood.fastfood;
+package mx.edu.utez.fastfood;
 
 import java.io.*;
 

@@ -1,7 +1,4 @@
-package mx.edu.utez.fastfood.fastfood.model.dish;
-
-import mx.edu.utez.fastfood.fastfood.model.category.Category;
-import mx.edu.utez.fastfood.fastfood.model.ingredient.Ingredient;
+package mx.edu.utez.fastfood.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,7 +54,7 @@ public class Dish {
         this.registrationDate = registrationDate;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -84,16 +81,24 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status) {
+    public Dish(String name, String description, double price, Category category, List<Ingredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.ingredients = ingredients;
+    }
+
+    public Dish(long id, String name, String description, double price, Category category, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.registrationDate = registrationDate;
-        this.status = status;
+        this.category = category;
+        this.ingredients = ingredients;
     }
 
-    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status, Category category, List<Ingredient> ingredients) {
+    public Dish(long id, String name, String description, double price, LocalDateTime registrationDate, boolean status, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -101,6 +106,19 @@ public class Dish {
         this.registrationDate = registrationDate;
         this.status = status;
         this.category = category;
-        this.ingredients = ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", registrationDate=" + registrationDate +
+                ", status=" + status +
+                ", category=" + category +
+                ", ingredients=" + ingredients +
+                '}';
     }
 }
